@@ -92,7 +92,7 @@ focus on issues more specific to RA.
 
   Here, *attr_list* is a comma-separated list of expressions that
   specifies the output attributes.  The output relational schema is
-  the list of output attribute specification, ordered according to
+  the list of output attribute specifications, ordered according to
   *attr_list*.  For an output attribute, if its expression is simply
   an attribute reference, its specification will be the same as the
   specification of the input attribute being referenced.  Otherwise,
@@ -175,3 +175,31 @@ focus on issues more specific to RA.
   it will be used to set the attribute names in the output attribute
   specifications; otherwise the attribute names from the input
   relation will be retained.
+
+**Aggregation and grouping**:
+
+  ``\aggr_{``\ *aggr_attr_list*\ ``}`` *input_relation*
+
+  ``\aggr_{``\ *group_by_attrs*\ ``:`` *aggr_attr_list*\ ``}`` *input_relation*
+
+  Here, *group_by_attrs* is a comma-separated list of expressions used
+  for grouping tuples in *input_relation*.  Most commonly, they are
+  simply attributes from *input_relation*.  All tuples that agree on
+  the values of *group_by_attrs* go into the same group.  In the form
+  without *group_by_attrs*, all tuples in *input_relation* will be in
+  one single group.
+
+  *aggr_attr_list* is a comma-separated list of expressions, each of
+  which must evaluate unambiguously to one value for each group.  If
+  an expression in *aggr_attr_list* references a non-group-by
+  attribute, that attribute must (eventually) be input to an aggregate
+  function, which will compute a single value over all tuples in each
+  group.
+
+  The output attributes include *group_by_attrs* followed by
+  *aggr_attr_list*, in the order of specification.  For an output
+  attribute, if its expression is simply an attribute reference, its
+  specification will be the same as the specification of the input
+  attribute being referenced.  Otherwise, the output attribute
+  specification will have no relation name or attribute name, and its
+  type will be what RA infers for the expression.

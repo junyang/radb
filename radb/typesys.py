@@ -27,17 +27,19 @@ class FuncSpec:
 
     """
     def __init__(self,
-                 name: str, outtype: ValType,
+                 name: str, is_aggr: bool, outtype: ValType,
                  required_argtypes: List[ValType],
                  optional_argtypes: List[ValType],
                  no_max_argc: bool=False):
-        """Create a function specification.  If no_max_argc is True, the
+        """Create a function specification.  The function is an aggregate
+        function if is_aggr is True.  If no_max_argc is True, the
         function can take an arbitrary number of additional arguments;
         in that case, optional_argtypes must not be empty, and its
         last element will be used as the type for additional
         arguments.
         """
         self.name = name
+        self.is_aggr = is_aggr
         self.outtype = outtype
         self.required_argtypes = required_argtypes
         self.optional_argtypes = optional_argtypes
@@ -50,7 +52,8 @@ class FuncSpec:
             s_argtypes.append(argtype.value\
                               + ('*' if (i == len(self.optional_argtypes)-1 and self.no_max_argc)\
                                  else '?'))
-        return '{}({}) -> {}'.format(self.name, ', '.join(s_argtypes), self.outtype.value)
+        return '{}{}({}) -> {}'.format('aggregate: ' if self.is_aggr else '',
+                                       self.name, ', '.join(s_argtypes), self.outtype.value)
     @staticmethod
     def from_config_line(line: str):
         """Construct a :class:`FuncSpec` object from a line.  See
@@ -60,13 +63,16 @@ class FuncSpec:
         """
         r_argtype = r'\w+[\?\*]?'
         r_argtypes = r'\s*(?:{r_argtype}(?:\s*,\s*{r_argtype})*)?\s*'.format(r_argtype=r_argtype)
-        r_decl = r'\s*(?P<s_name>[^\s\(]*)\s*' +\
-                 r'\((?P<s_argtypes>{r_argtypes})\)'.format(r_argtypes=r_argtypes) +\
-                 r'\s*->\s*(?P<s_outtype>\w+)\s*(\#.*)?$'
+        r_decl =\
+            r'(?P<s_aggregate>\s*aggregate\s*:)?' +\
+            r'\s*(?P<s_name>[^\s\(]*)\s*' +\
+            r'\((?P<s_argtypes>{r_argtypes})\)'.format(r_argtypes=r_argtypes) +\
+            r'\s*->\s*(?P<s_outtype>\w+)\s*(\#.*)?$'
         m = re.match(r_decl, line)
         if m is None:
             raise TypeSysError('cannot parse function declaration: {}'.format(line.strip()))
         name, s_argtypes, s_outtype = m.group('s_name', 's_argtypes', 's_outtype')
+        is_aggr = (m.group('s_aggregate') is not None)
         outtype = ValType(s_outtype)
         required_argtypes = list()
         optional_argtypes = list()
@@ -83,7 +89,8 @@ class FuncSpec:
                 if len(optional_argtypes) > 0:
                     raise TypeSysError('required argument cannot follow an optional one')
                 required_argtypes.append(argtype)
-        return FuncSpec(name, outtype, required_argtypes, optional_argtypes, no_max_argc)
+        return FuncSpec(name, is_aggr,
+                        outtype, required_argtypes, optional_argtypes, no_max_argc)
 
 class ValTypeChecker:
     def __init__(self, default_decl_lines: str, decl_lines: str=None):
@@ -121,10 +128,10 @@ class ValTypeChecker:
         if this == ValType.DATE and other == ValType.DATETIME:
             return True
         return False
-    def function_call(self, fname: str, argtypes: List[ValType]):
+    def function_call(self, fname: str, argtypes: List[ValType], allow_aggr=False):
         if fname not in self.decls:
             logger.warning('function "{}" not recognized'.format(fname))
-            return ValType.UNKNOWN
+            return FuncSpec(fname, None, ValType.UNKNOWN, argtypes, list())
         for funcspec in self.decls[fname]:
             if len(argtypes) < len(funcspec.required_argtypes):
                 continue
@@ -137,7 +144,11 @@ class ValTypeChecker:
                                [min(i, len(funcspec.optional_argtypes)-1)])
             if all(self.can_be_used_as(argtype, target)\
                    for argtype, target in zip(argtypes, targets)):
-                return funcspec.outtype
+                if not allow_aggr and funcspec.is_aggr:
+                    raise TypeSysError('aggregate function "{}" cannot be used here'\
+                                       .format(fname))
+                else:
+                    return funcspec
         raise TypeSysError('function "{}" cannot be applied to ({});'
                            ' correct signature(s):\n    {}'\
                            .format(fname, ', '.join(argtype.value for argtype in argtypes),

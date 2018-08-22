@@ -134,6 +134,11 @@ class RAParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by RAParser#aggrExpr.
+    def visitAggrExpr(self, ctx:RAParser.AggrExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by RAParser#renameExpr.
     def visitRenameExpr(self, ctx:RAParser.RenameExprContext):
         return self.visitChildren(ctx)

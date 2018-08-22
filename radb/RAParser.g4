@@ -31,6 +31,7 @@ relExpr  : PAREN_L relExpr PAREN_R                      # relExprParenthesized
          | relExpr UNION relExpr                        # unionExpr
          | relExpr DIFF relExpr                         # diffExpr
          | relExpr INTERSECT relExpr                    # intersectExpr
+         | AGGR ARG_L listOfValExprs (COLON listOfValExprs)? ARG_R relExpr      # aggrExpr
          ;
 
 definition : ID GETS relExpr;

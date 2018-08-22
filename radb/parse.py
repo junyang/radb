@@ -177,11 +177,6 @@ class ASTBuilder(RAParserVisitor):
     def visitSelectExpr(self, ctx):
         return radb.ast.Select(self.visit(ctx.valExpr()), self.visit(ctx.relExpr()))
 
-    def visitCrossExpr(self, ctx):
-        left = self.visit(ctx.relExpr(0))
-        right = self.visit(ctx.relExpr(1))
-        return radb.ast.Cross(left, right)
-
     def visitJoinExpr(self, ctx):
         left = self.visit(ctx.relExpr(0))
         cond = None if ctx.valExpr() is None else self.visit(ctx.valExpr())
@@ -192,6 +187,15 @@ class ASTBuilder(RAParserVisitor):
         left = self.visit(ctx.relExpr(0))
         right = self.visit(ctx.relExpr(1))
         return radb.ast.Cross(left, right)
+
+    def visitAggrExpr(self, ctx):
+        if ctx.listOfValExprs(1) is not None:
+            groupbys = self.visit(ctx.listOfValExprs(0))
+            aggrs = self.visit(ctx.listOfValExprs(1))
+        else:
+            groupbys = list()
+            aggrs = self.visit(ctx.listOfValExprs(0))
+        return radb.ast.Aggr(groupbys, aggrs, self.visit(ctx.relExpr()))
 
     def visitUnionExpr(self, ctx):
         left = self.visit(ctx.relExpr(0))
@@ -339,7 +343,7 @@ class RACompleter:
         for i, w in enumerate(RAParser.literalNames):
             if w.startswith("'\\"):
                 w = w.strip("'")
-                if i in (RAParser.RENAME, RAParser.PROJECT, RAParser.SELECT, RAParser.JOIN):
+                if i in (RAParser.RENAME, RAParser.PROJECT, RAParser.SELECT, RAParser.JOIN, RAParser.AGGR):
                     self.words.append('{}{} {} '.format(w,
                                                         literal(RAParser.ARG_L),
                                                         literal(RAParser.ARG_R)))

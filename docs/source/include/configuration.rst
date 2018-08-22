@@ -96,6 +96,14 @@ Finally, *return_t* specifies the result type of the function.  These
 types can be any of the basic value types supported by RA, as well as
 ``any`` (see :ref:`Data Types and Operators`).
 
+You can also specify a function as an aggregate, by prefixing the
+declaration line with keyword ``aggregate:`` (before *fname*).  An
+aggregate function takes a (multi)set of input tuples, each with
+attribute(s) matching the declared argument specification, and
+computes a single output value of the declared return type.  These
+functions can be used in the aggregation operator ``\aggr`` (see
+:ref:`Basic Usage`).
+
 Comments can be added with ``#``; text following ``#`` will be
 ignored.  There cannot be empty lines between function declarations.
 The order of declarations is important; see :ref:`Type Checking` for
@@ -110,6 +118,6 @@ details.
    would like to use only your own declarations for *f*.  (This
    behavior is necessitated by RA's simple, order-based resolution
    discussed in :ref:`Type Checking`, because we need a way for user
-   configuration to customize the order of declarations.)  A
+   configuration to customize the order of declarations.)  An
    implication of this rule is that you must remember to declare all
    alternative signatures for *f* in your user configuration file.

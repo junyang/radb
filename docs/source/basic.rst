@@ -11,12 +11,13 @@ content of a relation: Just type: *rel*\ ``;``, where *rel* is the
 relation name.  Note that every query/command should be terminated by
 a semicolon (``;``).
 
-For most database systems that RA runs on, relation and attribute
-names are case-insensitive per SQL standard. For example, ``drink`` is
-just as good as ``DRINK``.  Attributes can be of a variety of types;
-for details see :ref:`Data Types and Operators`.  For now just note
-that RA supports numbers, strings, dates, datetimes, as well as more
-exotic SQL types.
+In RA, relation and attribute names are case-sensitive (although some
+database systems and/or their Python drivers may let you ignore
+cases).  When in doubt, always use the exact same names shown in the
+output of the ``\list;`` command.  Attributes can be of a variety of
+types; for details see :ref:`Data Types and Operators`.  For now just
+note that RA supports numbers, strings, dates, datetimes, as well as
+more exotic SQL types.
 
 Here is an example of a complex query, which returns beers liked by
 those drinkers who do not frequent James Joyce Pub::
@@ -98,14 +99,14 @@ algebra operators.
 
 **Natural join**: *input_relation_1* ``\join`` *input_relation_2*
 
-  For example, to join Drinker(name, address) and Frequents(drinker,
-  bar, times_a_week) relations together using drinker name, we can
-  write Drinker \join \rename_{name, bar, times_a_week}
-  Frequents;. Natural join will automatically equate all pairs of
+  For example, to join *Drinker*\ (*name*, *address*) and *Frequents*\
+  (*drinker*, *bar*, *times_a_week*) relations together using drinker
+  name, we can write ``Drinker \join \rename_{name, bar, times_a_week}
+  Frequents;``. Natural join will automatically equate all pairs of
   identically named attributes from its inputs (in this case, name),
-  and output only one attribute per pair. Here we use \rename to
+  and output only one attribute per pair. Here we use ``\rename`` to
   create two name attributes for the natural join; see notes on
-  \rename below for more details.
+  ``\rename`` below for more details.
 
 **Cross product**: *input_relation_1* ``\cross`` *input_relation_2*
 
@@ -156,3 +157,32 @@ algebra operators.
 
     This form of the rename operator allows you to rename both the
     input relation as well as its attributes.
+
+**Aggregation and grouping**:
+
+  This operator is not in the standard relational algebra.  It has two
+  forms:
+
+  ``\aggr_{``\ *aggr_attr_list*\ ``}`` *input_relation*
+
+    This simple form of aggregation computes a single tuple,
+    aggregated over the entire input relation.  Here, *aggr_attr_list*
+    is a comma-separated list of aggregate expressions involving
+    functions such as ``sum``, ``count``, ``avg``, ``min``, and
+    ``max``.  For example::
+
+      \aggr_{sum(price), avg(price)} Serves;
+
+  ``\aggr_{``\ *group_by_attrs*\ ``:`` *aggr_attr_list*\ ``}`` *input_relation*
+
+    With this form, the input relation is first partitioned into
+    groups, according to the attributes listed in *group_by_attrs*:
+    all tuples that agree on the values of *group_by_attrs* go into
+    the same group.  Then, for each group, one output tuple is
+    produced: it will have the values for *group_by_attrs* (which are
+    shared by all group members), followed by the values of aggregate
+    expressions in *aggr_attr_list*.  For example, the following query
+    finds, for each beer, its average price and number of bars serving
+    it::
+
+      \aggr_{beer: avg(price), count(1)} Serves;

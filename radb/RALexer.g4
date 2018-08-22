@@ -27,6 +27,7 @@ CROSS : '\\cross';
 UNION : '\\union';
 DIFF : '\\diff';
 INTERSECT : '\\intersect';
+AGGR : '\\aggr';
 
 DOT : '.';
 COMMA : ',';

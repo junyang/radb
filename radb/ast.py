@@ -85,10 +85,18 @@ class ValExpr(Node):
         assert isinstance(inputs, list)
         assert all(isinstance(input, ValExpr) for input in inputs)
         self.inputs = inputs
-    def validateSubtree(self, context: StatementContext, relexpr: 'RelExpr'):
+    def validateSubtree(self, context: StatementContext, relexpr: 'RelExpr', allow_aggr=False):
         """Validate this value expression (in the scope of the given RelExpr)
         and set its type (as a ValType), using the input RelTypes of
-        the RelExpr to resolve attribute references.
+        the RelExpr to resolve attribute references.  Unless
+        allow_aggr is True, use of aggregate functions will be
+        considered as error.
+        """
+        raise NotImplementedError
+    def checkSubtreeGroupInvariant(self, relexpr: 'Aggr'):
+        """Check that this value expression evaluates to a value that is
+        invariant across members of a group produced by the given
+        Aggr.
         """
         raise NotImplementedError
     def info(self):
@@ -99,6 +107,8 @@ class ValExpr(Node):
 class Literal(ValExpr):
     def info(self):
         return str(self)
+    def checkSubtreeGroupInvariant(self, relexpr):
+        return
     def sql(self, relexpr):
         return str(self)
 
@@ -109,7 +119,7 @@ class RAString(Literal):
         self.val = val
     def __str__(self):
         return self.val
-    def validateSubtree(self, context: StatementContext, relexpr):
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
         self.type = ValType.STRING
 
 class RANumber(Literal):
@@ -119,7 +129,7 @@ class RANumber(Literal):
         self.val = val
     def __str__(self):
         return self.val
-    def validateSubtree(self, context: StatementContext, relexpr):
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
         self.type = ValType.NUMBER
 
 class FuncValExpr(ValExpr):
@@ -133,15 +143,25 @@ class FuncValExpr(ValExpr):
         return self.func + literal(sym.PAREN_L) +\
             ', '.join(str(arg) for arg in self.args) +\
             literal(sym.PAREN_R)
-    def validateSubtree(self, context: StatementContext, relexpr):
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
         argtypes = list()
         for arg in self.args:
-            arg.validateSubtree(context, relexpr)
+            arg.validateSubtree(context, relexpr, allow_aggr)
             argtypes.append(arg.type)
         try:
-            self.type = context.check.function_call(self.func, argtypes)
+            self.funcspec = context.check.function_call(self.func, argtypes, allow_aggr)
+            self.type = self.funcspec.outtype
         except TypeSysError as e:
             raise ValidationError(str(e), self, relexpr) from e
+    def checkSubtreeGroupInvariant(self, relexpr: 'Aggr'):
+        if self.funcspec.is_aggr:
+            return
+        if self.funcspec.is_aggr is None:
+            logger.warning('assuming invoking the unknown function "{}"'.format(self.func) +\
+                           ' produces a constant value per group')
+            return
+        for arg in self.args:
+            arg.checkSubtreeGroupInvariant(relexpr)
     def info(self):
         return self.func + literal(sym.PAREN_L) +\
             ', '.join(arg.info() for arg in self.args) +\
@@ -163,7 +183,7 @@ class AttrRef(ValExpr):
             return self.name
         else:
             return self.rel + literal(sym.DOT) + self.name
-    def validateSubtree(self, context: StatementContext, relexpr):
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
         """Validate this attribute reference (in the scope of the given
         RelExpr) and set its type (as a ValType) and internal
         reference (used in translation), using the input RelTypes of
@@ -181,6 +201,11 @@ class AttrRef(ValExpr):
                     self.internal_ref = (ridx, aidx)
         if self.internal_ref is None:
             raise ValidationError('invalid attribute reference', self, relexpr)
+    def checkSubtreeGroupInvariant(self, relexpr: 'Aggr'):
+        if all(self.internal_ref != groupby.internal_ref\
+               for groupby in relexpr.groupbys if isinstance(groupby, AttrRef)):
+            raise ValidationError('attribute must be aggregated or in the group-by list',
+                                  self, relexpr)
     def info(self):
         return '{}[{}.{}]'.format(self, *self.internal_ref)
     def sql(self, relexpr):
@@ -201,14 +226,16 @@ class ValExprBinaryOp(ValExpr):
         self.op = op
     def __str__(self):
         return '{} {} {}'.format(paren(self.inputs[0]), literal(self.op), paren(self.inputs[1]))
-    def validateSubtree(self, context: StatementContext, relexpr):
-        self.inputs[0].validateSubtree(context, relexpr)
-        self.inputs[1].validateSubtree(context, relexpr)
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
+        self.inputs[0].validateSubtree(context, relexpr, allow_aggr)
+        self.inputs[1].validateSubtree(context, relexpr, allow_aggr)
         try:
-            self.type = context.check.function_call(symbolic(self.op),
-                                                    [self.inputs[0].type, self.inputs[1].type])
+            self.type = context.check.function_call(symbolic(self.op), [self.inputs[0].type, self.inputs[1].type]).outtype
         except TypeSysError as e:
             raise ValidationError(str(e), self, relexpr) from e
+    def checkSubtreeGroupInvariant(self, relexpr: 'Aggr'):
+        self.inputs[0].checkSubtreeGroupInvariant(relexpr)
+        self.inputs[1].checkSubtreeGroupInvariant(relexpr)
     def info(self):
         return '{} {} {}'.format(paren(self.inputs[0]).info(),
                                  literal(self.op),
@@ -227,12 +254,14 @@ class ValExprUnaryOp(ValExpr):
     def __str__(self):
         fmt = '{input} {op}' if self.op in (sym.IS_NULL, sym.IS_NOT_NULL) else '{op} {input}'
         return fmt.format(op=literal(self.op), input=paren(self.inputs[0]))
-    def validateSubtree(self, context: StatementContext, relexpr):
-        self.inputs[0].validateSubtree(context, relexpr)
+    def validateSubtree(self, context: StatementContext, relexpr, allow_aggr=False):
+        self.inputs[0].validateSubtree(context, relexpr, allow_aggr)
         try:
-            self.type = context.check.function_call(symbolic(self.op), [self.inputs[0].type])
+            self.type = context.check.function_call(symbolic(self.op), [self.inputs[0].type]).outtype
         except TypeSysError as e:
             raise ValidationError(str(e), self, relexpr) from e
+    def checkSubtreeGroupInvariant(self, relexpr: 'Aggr'):
+        self.inputs[0].checkSubtreeGroupInvariant(relexpr)
     def info(self):
         fmt = '{input} {op}' if self.op in (sym.IS_NULL, sym.IS_NOT_NULL) else '{op} {input}'
         return fmt.format(op=literal(self.op), input=paren(self.inputs[0]).info())
@@ -585,6 +614,61 @@ class Cross(RelExpr):
         yield '{}({}) AS (SELECT * FROM {}, {})'\
             .format(self.type.sql_rel(), ', '.join(self.type.sql_attrs()),
                     self.inputs[0].type.sql_rel(), self.inputs[1].type.sql_rel())
+
+class Aggr(RelExpr):
+    def __init__(self, groupbys, aggrs, input):
+        assert isinstance(groupbys, list)
+        assert all(isinstance(attr, ValExpr) for attr in groupbys)
+        assert isinstance(aggrs, list)
+        assert all(isinstance(attr, ValExpr) for attr in aggrs)
+        assert isinstance(input, RelExpr)
+        super(Aggr, self).__init__([input])
+        self.groupbys = groupbys
+        self.aggrs = aggrs
+    def __str__(self):
+        return literal(sym.AGGR) + literal(sym.ARG_L) +\
+            ', '.join(str(attr) for attr in self.groupbys) +\
+            (': ' if len(self.groupbys) > 0 else '') +\
+            ', '.join(str(attr) for attr in self.aggrs) +\
+            literal(sym.ARG_R) + ' ' + str(paren(self.inputs[0]))
+    def validateSubtree(self, context: StatementContext):
+        self.inputs[0].validateSubtree(context)
+        output_attrspecs = list()
+        for groupby in self.groupbys:
+            groupby.validateSubtree(context, self)
+            if isinstance(groupby, AttrRef):
+                _, aidx = groupby.internal_ref
+                output_attrspecs.append(self.inputs[0].type.attrs[aidx])
+            else:
+                output_attrspecs.append(AttrSpec(None, None, groupby.type))
+        for aggr in self.aggrs:
+            aggr.validateSubtree(context, self, allow_aggr=True)
+            aggr.checkSubtreeGroupInvariant(self)
+            if isinstance(aggr, AttrRef): # rare, but techincally possible
+                _, aidx = groupby.internal_ref
+                output_attrspecs.append(self.inputs[0].type.attrs[aidx])
+            else:
+                output_attrspecs.append(AttrSpec(None, None, aggr.type))
+        self.type = RelType(context.new_tmp(), output_attrspecs)
+    def info(self):
+        yield '{} => {}'.format(symbolic(sym.AGGR), self.type)
+        for groupby in self.groupbys:
+            yield '|group by: ' + groupby.info()
+        for aggr in self.aggrs:
+            yield '|' + aggr.info()
+        for i, line in enumerate(self.inputs[0].info()):
+            yield ('\\_' if i == 0 else '  ') + line
+    def sql(self):
+        for block in self.inputs[0].sql():
+            yield block
+        yield '{}({}) AS (SELECT {}{}{} FROM {}{}{})'\
+            .format(self.type.sql_rel(), ', '.join(self.type.sql_attrs()),
+                    ', '.join(attr.sql(self) for attr in self.groupbys),
+                    (', ' if len(self.groupbys) > 0 else ''),
+                    ', '.join(attr.sql(self) for attr in self.aggrs),
+                    self.inputs[0].type.sql_rel(),
+                    (' GROUP BY ' if len(self.groupbys) > 0 else ''),
+                    ', '.join(attr.sql(self) for attr in self.groupbys))
 
 class SetOp(RelExpr):
     def __init__(self, left, right):
