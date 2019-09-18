@@ -174,6 +174,11 @@ class RAParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by RAParser#helpCommand.
+    def visitHelpCommand(self, ctx:RAParser.HelpCommandContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by RAParser#quitCommand.
     def visitQuitCommand(self, ctx:RAParser.QuitCommandContext):
         return self.visitChildren(ctx)

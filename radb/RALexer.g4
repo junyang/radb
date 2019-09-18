@@ -53,6 +53,7 @@ LIST : '\\list';
 CLEAR : '\\clear';
 SAVE : '\\save';
 SOURCE : '\\source';
+HELP : '\\help';
 QUIT : '\\quit';
 SQLEXEC : '\\sqlexec' -> pushMode(SQLEXEC_MODE);
 

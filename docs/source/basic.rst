@@ -149,9 +149,9 @@ algebra operators.
     input relation (the attribute names remain the same).  For
     example::
 
-      \rename_{s1} Serves
+      \rename_{s1:*} Serves
         \join_{s1.beer=s2.beer and s1.price>s2.price}
-      \rename_{s2} Serves;
+      \rename_{s2:*} Serves;
 
   ``\rename_{`` *new_rel_name* ``:`` *new_attr_names*  ``}`` *input_relation*
 

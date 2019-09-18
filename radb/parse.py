@@ -218,6 +218,9 @@ class ASTBuilder(RAParserVisitor):
     def visitListCommand(self, ctx):
         return radb.ast.Command(RAParser.LIST)
 
+    def visitHelpCommand(self, ctx):
+        return radb.ast.Command(RAParser.HELP)
+
     def visitQuitCommand(self, ctx):
         return radb.ast.Command(RAParser.QUIT)
 
@@ -347,7 +350,7 @@ class RACompleter:
                     self.words.append('{}{} {} '.format(w,
                                                         literal(RAParser.ARG_L),
                                                         literal(RAParser.ARG_R)))
-                elif i in (RAParser.LIST, RAParser.QUIT):
+                elif i in (RAParser.LIST, RAParser.HELP, RAParser.QUIT):
                     self.words.append('{}{}'.format(w, literal(RAParser.TERMINATOR)))
                 elif i == RAParser.SOURCE:
                     self.words.append("{} ''{}".format(w, literal(RAParser.TERMINATOR)))

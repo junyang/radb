@@ -14,14 +14,16 @@ logger = logging.getLogger('ra')
 ######################################################################
 
 class Context:
-    def __init__(self, db, check, views):
+    def __init__(self, configured, db, check, views):
+        self.configured = configured
         self.db = db
         self.check = check
         self.views = views
 
 class StatementContext(Context):
     def __init__(self, context: Context, root: 'RelType'):
-        super(StatementContext, self).__init__(context.db, context.check, context.views)
+        super(StatementContext, self).\
+            __init__(context.configured, context.db, context.check, context.views)
         self.tmps = 0
         self.root = root
     def new_tmp(self):
@@ -758,7 +760,8 @@ class Define(Node):
         else:
             dependents = context.views.find_dependents(self.view, recurse=True)
             # validate this definition without previously dependent views:
-            tmp_context = Context(context.db, context.check, context.views.clone())
+            tmp_context = Context(context.configured, context.db, context.check,
+                                  context.views.clone())
             tmp_context.views.clear(self.view) # which removes dependents too
             try:
                 self.definition.validate(tmp_context)
@@ -796,7 +799,7 @@ class Define(Node):
 
 class Command(Node):
     def __init__(self, cmd):
-        assert cmd in (sym.LIST, sym.QUIT)
+        assert cmd in (sym.LIST, sym.HELP, sym.QUIT)
         self.cmd = cmd
     def __str__(self):
         return literal(self.cmd)
@@ -822,6 +825,51 @@ class Command(Node):
                     print('  {}({}) {} {}'.format(view,
                                                   ', '.join(ast.type.str_attr_names_and_types()),
                                                   literal(sym.GETS), raw_def))
+        elif self.cmd == sym.HELP:
+            print(r'''
+Relational Operators:
+
+  Selection:        \select{ CONDITION } INPUT_REL
+  Projection:       \project{ ATTR_1, ATTR_2, ... } INPUT_REL
+  (Theta-)Join:     INPUT_REL_1 \join_{ CONDITION } INPUT_REL_2
+  Natural Join:     INPUT_REL_1 \join INPUT_REL_2
+  Cross Product:    INPUT_REL_1 \cross INPUT_REL_2
+  Set Union:        INPUT_REL_1 \union INPUT_REL_2
+  Set Difference:   INPUT_REL_1 \diff INPUT_REL_2
+  Set Intersection: INPUT_REL_1 \intersect INPUT_REL_2
+  Rename:           \rename_{ NEW_ATTR_NAME_1, NEW_ATTR_NAME_2, ... } INPUT_REL
+                    \rename_{ NEW_REL_NAME: * } INPUT_REL
+                    \rename_{ NEW_REL_NAME:
+                              NEW_ATTR_NAME_1, NEW_ATTR_NAME_2, ... } INPUT_REL
+  Aggregation:      \aggr_{ AGGR_EXP_1, AGGR_EXP_2, ... } INPUT_REL
+                    \aggr_{ GROUP_BY_ATTR_1, GROUP_BY_ATTR_2, ...:
+                            AGGR_EXP_1, AGGR_EXP_2, ... } INPUT_REL
+
+Writing Relational Algebra Queries:
+
+* End every query with a semicolon (;).
+* The simplest query is one that returns a database relation, i.e.:
+    REL_NAME;
+* Build a complex query by nesting: you can feed a subquery as an
+  input relation to another relational operator (using parentheses to
+  enclose the subquery as necessary to avoid ambiguity) , e.g.:
+    \select_{CONDITION} (\project_{ATTR1, ATTR2} REL_1 ) \join REL_2;
+
+Commands:
+
+  \help;
+  \quit;
+  \list;            List database relatoions and user-defined views
+  \clear *;         Clear all user view definitions
+  \clear! V;        Clear definition for view V those dependant on it
+  \save 'FILE';     Save all view defintions to FILE
+  \save V 'FILE';   Save definition for view V to FILE, along with
+                    any definitions it depends on
+  \source 'FILE';   Execute RA statements from FILE
+  \sqlexec_{ SQL }; Execute SQL (a single statement) in the underlying database
+
+For more details, see ''' + context.configured['setup.docbaseurl'] + '''
+''')
         elif self.cmd == sym.QUIT:
             sys.exit(0)
 

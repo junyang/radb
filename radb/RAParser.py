@@ -7,8 +7,8 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\65")
-        buf.write("\u00c1\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\66")
+        buf.write("\u00c2\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
         buf.write("\2\5\2\35\n\2\3\2\3\2\3\2\5\2\"\n\2\3\2\3\2\3\2\5\2\'")
         buf.write("\n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
@@ -22,12 +22,12 @@ def serializedATN():
         buf.write("\3\5\3\5\7\5\u0091\n\5\f\5\16\5\u0094\13\5\3\6\3\6\3\6")
         buf.write("\3\6\3\7\3\7\3\7\5\7\u009d\n\7\3\7\3\7\5\7\u00a1\n\7\3")
         buf.write("\7\3\7\5\7\u00a5\n\7\3\7\3\7\5\7\u00a9\n\7\3\7\3\7\3\7")
-        buf.write("\3\7\3\7\5\7\u00b0\n\7\3\b\3\b\3\b\5\b\u00b5\n\b\3\b\3")
-        buf.write("\b\3\t\7\t\u00ba\n\t\f\t\16\t\u00bd\13\t\3\t\3\t\3\t\2")
-        buf.write("\4\2\b\n\2\4\6\b\n\f\16\20\2\6\3\2\36\37\3\2 !\3\2).\4")
-        buf.write("\2\22\22\36\36\2\u00e4\2&\3\2\2\2\4F\3\2\2\2\6K\3\2\2")
-        buf.write("\2\by\3\2\2\2\n\u0095\3\2\2\2\f\u00af\3\2\2\2\16\u00b4")
-        buf.write("\3\2\2\2\20\u00bb\3\2\2\2\22\23\b\2\1\2\23\'\7\20\2\2")
+        buf.write("\3\7\3\7\3\7\5\7\u00b1\n\7\3\b\3\b\3\b\5\b\u00b6\n\b\3")
+        buf.write("\b\3\b\3\t\7\t\u00bb\n\t\f\t\16\t\u00be\13\t\3\t\3\t\3")
+        buf.write("\t\2\4\2\b\n\2\4\6\b\n\f\16\20\2\6\3\2\36\37\3\2 !\3\2")
+        buf.write(").\4\2\22\22\36\36\2\u00e6\2&\3\2\2\2\4F\3\2\2\2\6K\3")
+        buf.write("\2\2\2\by\3\2\2\2\n\u0095\3\2\2\2\f\u00b0\3\2\2\2\16\u00b5")
+        buf.write("\3\2\2\2\20\u00bc\3\2\2\2\22\23\b\2\1\2\23\'\7\20\2\2")
         buf.write("\24\'\7\21\2\2\25\26\7#\2\2\26\27\5\2\2\2\27\30\7$\2\2")
         buf.write("\30\'\3\2\2\2\31\32\7\22\2\2\32\34\7#\2\2\33\35\5\4\3")
         buf.write("\2\34\33\3\2\2\2\34\35\3\2\2\2\35\36\3\2\2\2\36\'\7$\2")
@@ -66,27 +66,28 @@ def serializedATN():
         buf.write("\u0090\u008d\3\2\2\2\u0091\u0094\3\2\2\2\u0092\u0090\3")
         buf.write("\2\2\2\u0092\u0093\3\2\2\2\u0093\t\3\2\2\2\u0094\u0092")
         buf.write("\3\2\2\2\u0095\u0096\7\22\2\2\u0096\u0097\7\'\2\2\u0097")
-        buf.write("\u0098\5\b\5\2\u0098\13\3\2\2\2\u0099\u00b0\7/\2\2\u009a")
+        buf.write("\u0098\5\b\5\2\u0098\13\3\2\2\2\u0099\u00b1\7/\2\2\u009a")
         buf.write("\u00a0\7\60\2\2\u009b\u009d\7\7\2\2\u009c\u009b\3\2\2")
         buf.write("\2\u009c\u009d\3\2\2\2\u009d\u009e\3\2\2\2\u009e\u00a1")
         buf.write("\7\22\2\2\u009f\u00a1\7\36\2\2\u00a0\u009c\3\2\2\2\u00a0")
-        buf.write("\u009f\3\2\2\2\u00a1\u00b0\3\2\2\2\u00a2\u00a4\7\61\2")
+        buf.write("\u009f\3\2\2\2\u00a1\u00b1\3\2\2\2\u00a2\u00a4\7\61\2")
         buf.write("\2\u00a3\u00a5\7\7\2\2\u00a4\u00a3\3\2\2\2\u00a4\u00a5")
         buf.write("\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\u00a8\t\5\2\2\u00a7")
         buf.write("\u00a9\7\20\2\2\u00a8\u00a7\3\2\2\2\u00a8\u00a9\3\2\2")
-        buf.write("\2\u00a9\u00b0\3\2\2\2\u00aa\u00ab\7\62\2\2\u00ab\u00b0")
-        buf.write("\7\20\2\2\u00ac\u00b0\7\63\2\2\u00ad\u00ae\7\64\2\2\u00ae")
-        buf.write("\u00b0\7\65\2\2\u00af\u0099\3\2\2\2\u00af\u009a\3\2\2")
-        buf.write("\2\u00af\u00a2\3\2\2\2\u00af\u00aa\3\2\2\2\u00af\u00ac")
-        buf.write("\3\2\2\2\u00af\u00ad\3\2\2\2\u00b0\r\3\2\2\2\u00b1\u00b5")
-        buf.write("\5\b\5\2\u00b2\u00b5\5\n\6\2\u00b3\u00b5\5\f\7\2\u00b4")
-        buf.write("\u00b1\3\2\2\2\u00b4\u00b2\3\2\2\2\u00b4\u00b3\3\2\2\2")
-        buf.write("\u00b5\u00b6\3\2\2\2\u00b6\u00b7\7\6\2\2\u00b7\17\3\2")
-        buf.write("\2\2\u00b8\u00ba\5\16\b\2\u00b9\u00b8\3\2\2\2\u00ba\u00bd")
-        buf.write("\3\2\2\2\u00bb\u00b9\3\2\2\2\u00bb\u00bc\3\2\2\2\u00bc")
-        buf.write("\u00be\3\2\2\2\u00bd\u00bb\3\2\2\2\u00be\u00bf\7\2\2\3")
-        buf.write("\u00bf\21\3\2\2\2\27\34!&ACIN\\_ty\u0081\u0090\u0092\u009c")
-        buf.write("\u00a0\u00a4\u00a8\u00af\u00b4\u00bb")
+        buf.write("\2\u00a9\u00b1\3\2\2\2\u00aa\u00ab\7\62\2\2\u00ab\u00b1")
+        buf.write("\7\20\2\2\u00ac\u00b1\7\63\2\2\u00ad\u00b1\7\64\2\2\u00ae")
+        buf.write("\u00af\7\65\2\2\u00af\u00b1\7\66\2\2\u00b0\u0099\3\2\2")
+        buf.write("\2\u00b0\u009a\3\2\2\2\u00b0\u00a2\3\2\2\2\u00b0\u00aa")
+        buf.write("\3\2\2\2\u00b0\u00ac\3\2\2\2\u00b0\u00ad\3\2\2\2\u00b0")
+        buf.write("\u00ae\3\2\2\2\u00b1\r\3\2\2\2\u00b2\u00b6\5\b\5\2\u00b3")
+        buf.write("\u00b6\5\n\6\2\u00b4\u00b6\5\f\7\2\u00b5\u00b2\3\2\2\2")
+        buf.write("\u00b5\u00b3\3\2\2\2\u00b5\u00b4\3\2\2\2\u00b6\u00b7\3")
+        buf.write("\2\2\2\u00b7\u00b8\7\6\2\2\u00b8\17\3\2\2\2\u00b9\u00bb")
+        buf.write("\5\16\b\2\u00ba\u00b9\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc")
+        buf.write("\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\u00bf\3\2\2\2")
+        buf.write("\u00be\u00bc\3\2\2\2\u00bf\u00c0\7\2\2\3\u00c0\21\3\2")
+        buf.write("\2\2\27\34!&ACIN\\_ty\u0081\u0090\u0092\u009c\u00a0\u00a4")
+        buf.write("\u00a8\u00b0\u00b5\u00bc")
         return buf.getvalue()
 
 
@@ -109,8 +110,8 @@ class RAParser ( Parser ):
                      "'\\aggr'", "'.'", "','", "'*'", "'/'", "'+'", "'-'", 
                      "'||'", "'('", "')'", "'_{'", "'}'", "':-'", "':'", 
                      "'<='", "'<>'", "'>='", "'<'", "'='", "'>'", "'\\list'", 
-                     "'\\clear'", "'\\save'", "'\\source'", "'\\quit'", 
-                     "'\\sqlexec'" ]
+                     "'\\clear'", "'\\save'", "'\\source'", "'\\help'", 
+                     "'\\quit'", "'\\sqlexec'" ]
 
     symbolicNames = [ "<INVALID>", "WS", "COMMENT", "LINE_COMMENT", "TERMINATOR", 
                       "FORCE", "IS_NULL", "IS_NOT_NULL", "IS", "NULL", "LIKE", 
@@ -119,8 +120,8 @@ class RAParser ( Parser ):
                       "INTERSECT", "AGGR", "DOT", "COMMA", "STAR", "SLASH", 
                       "PLUS", "MINUS", "CONCAT", "PAREN_L", "PAREN_R", "ARG_L", 
                       "ARG_R", "GETS", "COLON", "LE", "NE", "GE", "LT", 
-                      "EQ", "GT", "LIST", "CLEAR", "SAVE", "SOURCE", "QUIT", 
-                      "SQLEXEC", "SQLEXEC_TEXT" ]
+                      "EQ", "GT", "LIST", "CLEAR", "SAVE", "SOURCE", "HELP", 
+                      "QUIT", "SQLEXEC", "SQLEXEC_TEXT" ]
 
     RULE_valExpr = 0
     RULE_listOfValExprs = 1
@@ -183,9 +184,10 @@ class RAParser ( Parser ):
     CLEAR=46
     SAVE=47
     SOURCE=48
-    QUIT=49
-    SQLEXEC=50
-    SQLEXEC_TEXT=51
+    HELP=49
+    QUIT=50
+    SQLEXEC=51
+    SQLEXEC_TEXT=52
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -1552,6 +1554,22 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class HelpCommandContext(CommandContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def HELP(self):
+            return self.getToken(RAParser.HELP, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitHelpCommand" ):
+                return visitor.visitHelpCommand(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class SourceCommandContext(CommandContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
@@ -1593,7 +1611,7 @@ class RAParser ( Parser ):
         self.enterRule(localctx, 10, self.RULE_command)
         self._la = 0 # Token type
         try:
-            self.state = 173
+            self.state = 174
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [RAParser.LIST]:
@@ -1667,18 +1685,24 @@ class RAParser ( Parser ):
                 self.state = 169
                 self.match(RAParser.STRING)
                 pass
-            elif token in [RAParser.QUIT]:
-                localctx = RAParser.QuitCommandContext(self, localctx)
+            elif token in [RAParser.HELP]:
+                localctx = RAParser.HelpCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 170
+                self.match(RAParser.HELP)
+                pass
+            elif token in [RAParser.QUIT]:
+                localctx = RAParser.QuitCommandContext(self, localctx)
+                self.enterOuterAlt(localctx, 6)
+                self.state = 171
                 self.match(RAParser.QUIT)
                 pass
             elif token in [RAParser.SQLEXEC]:
                 localctx = RAParser.SqlexecCommandContext(self, localctx)
-                self.enterOuterAlt(localctx, 6)
-                self.state = 171
-                self.match(RAParser.SQLEXEC)
+                self.enterOuterAlt(localctx, 7)
                 self.state = 172
+                self.match(RAParser.SQLEXEC)
+                self.state = 173
                 self.match(RAParser.SQLEXEC_TEXT)
                 pass
             else:
@@ -1731,26 +1755,26 @@ class RAParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 178
+            self.state = 179
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
             if la_ == 1:
-                self.state = 175
+                self.state = 176
                 self.relExpr(0)
                 pass
 
             elif la_ == 2:
-                self.state = 176
+                self.state = 177
                 self.definition()
                 pass
 
             elif la_ == 3:
-                self.state = 177
+                self.state = 178
                 self.command()
                 pass
 
 
-            self.state = 180
+            self.state = 181
             self.match(RAParser.TERMINATOR)
         except RecognitionException as re:
             localctx.exception = re
@@ -1795,17 +1819,17 @@ class RAParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 185
+            self.state = 186
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << RAParser.ID) | (1 << RAParser.RENAME) | (1 << RAParser.PROJECT) | (1 << RAParser.SELECT) | (1 << RAParser.AGGR) | (1 << RAParser.PAREN_L) | (1 << RAParser.LIST) | (1 << RAParser.CLEAR) | (1 << RAParser.SAVE) | (1 << RAParser.SOURCE) | (1 << RAParser.QUIT) | (1 << RAParser.SQLEXEC))) != 0):
-                self.state = 182
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << RAParser.ID) | (1 << RAParser.RENAME) | (1 << RAParser.PROJECT) | (1 << RAParser.SELECT) | (1 << RAParser.AGGR) | (1 << RAParser.PAREN_L) | (1 << RAParser.LIST) | (1 << RAParser.CLEAR) | (1 << RAParser.SAVE) | (1 << RAParser.SOURCE) | (1 << RAParser.HELP) | (1 << RAParser.QUIT) | (1 << RAParser.SQLEXEC))) != 0):
+                self.state = 183
                 self.statement()
-                self.state = 187
+                self.state = 188
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 188
+            self.state = 189
             self.match(RAParser.EOF)
         except RecognitionException as re:
             localctx.exception = re

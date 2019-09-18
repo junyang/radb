@@ -97,7 +97,7 @@ def main():
         sys.exit(1)
 
     # construct context (starting with empty view collection):
-    context = Context(db, check, ViewCollection())
+    context = Context(configured, db, check, ViewCollection())
 
     # finally, let's start:
     if args.inputfile is None: # interactive:

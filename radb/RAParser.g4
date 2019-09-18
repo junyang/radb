@@ -40,6 +40,7 @@ command : LIST                                          # listCommand
         | CLEAR (FORCE? ID|STAR)                        # clearCommand
         | SAVE FORCE? (ID|STAR) STRING?                 # saveCommand
         | SOURCE STRING                                 # sourceCommand
+        | HELP                                          # helpCommand
         | QUIT                                          # quitCommand
         | SQLEXEC SQLEXEC_TEXT                          # sqlexecCommand
         ;
