@@ -1,9 +1,13 @@
-# Generated from RAParser.g4 by ANTLR 4.7
+# Generated from RAParser.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
-from typing.io import TextIO
 import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
 
 def serializedATN():
     with StringIO() as buf:
@@ -191,13 +195,15 @@ class RAParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.7")
+        self.checkVersion("4.9.2")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
 
 
+
     class ValExprContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -210,28 +216,6 @@ class RAParser ( Parser ):
      
         def copyFrom(self, ctx:ParserRuleContext):
             super().copyFrom(ctx)
-
-
-    class AndExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def valExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.ValExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.ValExprContext,i)
-
-        def AND(self):
-            return self.getToken(RAParser.AND, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAndExpr" ):
-                return visitor.visitAndExpr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
     class NumberLiteralValExprContext(ValExprContext):
@@ -250,24 +234,21 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class LikeExprContext(ValExprContext):
+    class IsNotNullExprContext(ValExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def valExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.ValExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.ValExprContext,i)
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
 
-        def LIKE(self):
-            return self.getToken(RAParser.LIKE, 0)
+        def IS_NOT_NULL(self):
+            return self.getToken(RAParser.IS_NOT_NULL, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLikeExpr" ):
-                return visitor.visitLikeExpr(self)
+            if hasattr( visitor, "visitIsNotNullExpr" ):
+                return visitor.visitIsNotNullExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -295,6 +276,27 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class AttrRefContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(RAParser.ID)
+            else:
+                return self.getToken(RAParser.ID, i)
+        def DOT(self):
+            return self.getToken(RAParser.DOT, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAttrRef" ):
+                return visitor.visitAttrRef(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class PlusMinusExprContext(ValExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
@@ -315,6 +317,171 @@ class RAParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPlusMinusExpr" ):
                 return visitor.visitPlusMinusExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class OrExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def valExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.ValExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.ValExprContext,i)
+
+        def OR(self):
+            return self.getToken(RAParser.OR, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOrExpr" ):
+                return visitor.visitOrExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ValExprParenthesizedContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PAREN_L(self):
+            return self.getToken(RAParser.PAREN_L, 0)
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
+
+        def PAREN_R(self):
+            return self.getToken(RAParser.PAREN_R, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitValExprParenthesized" ):
+                return visitor.visitValExprParenthesized(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ConcatExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def valExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.ValExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.ValExprContext,i)
+
+        def CONCAT(self):
+            return self.getToken(RAParser.CONCAT, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConcatExpr" ):
+                return visitor.visitConcatExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NotExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NOT(self):
+            return self.getToken(RAParser.NOT, 0)
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNotExpr" ):
+                return visitor.visitNotExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class IsNullExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
+
+        def IS_NULL(self):
+            return self.getToken(RAParser.IS_NULL, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIsNullExpr" ):
+                return visitor.visitIsNullExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class StringLiteralValExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STRING(self):
+            return self.getToken(RAParser.STRING, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStringLiteralValExpr" ):
+                return visitor.visitStringLiteralValExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LikeExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def valExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.ValExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.ValExprContext,i)
+
+        def LIKE(self):
+            return self.getToken(RAParser.LIKE, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLikeExpr" ):
+                return visitor.visitLikeExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class MultDivExprContext(ValExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def valExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.ValExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.ValExprContext,i)
+
+        def STAR(self):
+            return self.getToken(RAParser.STAR, 0)
+        def SLASH(self):
+            return self.getToken(RAParser.SLASH, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultDivExpr" ):
+                return visitor.visitMultDivExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -351,7 +518,7 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class OrExprContext(ValExprContext):
+    class AndExprContext(ValExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
             super().__init__(parser)
@@ -363,173 +530,12 @@ class RAParser ( Parser ):
             else:
                 return self.getTypedRuleContext(RAParser.ValExprContext,i)
 
-        def OR(self):
-            return self.getToken(RAParser.OR, 0)
+        def AND(self):
+            return self.getToken(RAParser.AND, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitOrExpr" ):
-                return visitor.visitOrExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AttrRefContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ID(self, i:int=None):
-            if i is None:
-                return self.getTokens(RAParser.ID)
-            else:
-                return self.getToken(RAParser.ID, i)
-        def DOT(self):
-            return self.getToken(RAParser.DOT, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAttrRef" ):
-                return visitor.visitAttrRef(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class MultDivExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def valExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.ValExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.ValExprContext,i)
-
-        def STAR(self):
-            return self.getToken(RAParser.STAR, 0)
-        def SLASH(self):
-            return self.getToken(RAParser.SLASH, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMultDivExpr" ):
-                return visitor.visitMultDivExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ConcatExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def valExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.ValExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.ValExprContext,i)
-
-        def CONCAT(self):
-            return self.getToken(RAParser.CONCAT, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitConcatExpr" ):
-                return visitor.visitConcatExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ValExprParenthesizedContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def PAREN_L(self):
-            return self.getToken(RAParser.PAREN_L, 0)
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-        def PAREN_R(self):
-            return self.getToken(RAParser.PAREN_R, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitValExprParenthesized" ):
-                return visitor.visitValExprParenthesized(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class IsNullExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-        def IS_NULL(self):
-            return self.getToken(RAParser.IS_NULL, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIsNullExpr" ):
-                return visitor.visitIsNullExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class IsNotNullExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-        def IS_NOT_NULL(self):
-            return self.getToken(RAParser.IS_NOT_NULL, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIsNotNullExpr" ):
-                return visitor.visitIsNotNullExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class NotExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def NOT(self):
-            return self.getToken(RAParser.NOT, 0)
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNotExpr" ):
-                return visitor.visitNotExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class StringLiteralValExprContext(ValExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.ValExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def STRING(self):
-            return self.getToken(RAParser.STRING, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStringLiteralValExpr" ):
-                return visitor.visitStringLiteralValExpr(self)
+            if hasattr( visitor, "visitAndExpr" ):
+                return visitor.visitAndExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -779,7 +785,9 @@ class RAParser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class ListOfValExprsContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -835,7 +843,9 @@ class RAParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ListOfIDsContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -890,7 +900,9 @@ class RAParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class RelExprContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -903,6 +915,131 @@ class RAParser ( Parser ):
      
         def copyFrom(self, ctx:ParserRuleContext):
             super().copyFrom(ctx)
+
+
+    class RelRefContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(RAParser.ID, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRelRef" ):
+                return visitor.visitRelRef(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class RenameExprContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def RENAME(self):
+            return self.getToken(RAParser.RENAME, 0)
+        def ARG_L(self):
+            return self.getToken(RAParser.ARG_L, 0)
+        def ARG_R(self):
+            return self.getToken(RAParser.ARG_R, 0)
+        def relExpr(self):
+            return self.getTypedRuleContext(RAParser.RelExprContext,0)
+
+        def listOfIDs(self):
+            return self.getTypedRuleContext(RAParser.ListOfIDsContext,0)
+
+        def ID(self):
+            return self.getToken(RAParser.ID, 0)
+        def COLON(self):
+            return self.getToken(RAParser.COLON, 0)
+        def STAR(self):
+            return self.getToken(RAParser.STAR, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRenameExpr" ):
+                return visitor.visitRenameExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class IntersectExprContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def relExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.RelExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.RelExprContext,i)
+
+        def INTERSECT(self):
+            return self.getToken(RAParser.INTERSECT, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIntersectExpr" ):
+                return visitor.visitIntersectExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class JoinExprContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def relExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(RAParser.RelExprContext)
+            else:
+                return self.getTypedRuleContext(RAParser.RelExprContext,i)
+
+        def JOIN(self):
+            return self.getToken(RAParser.JOIN, 0)
+        def ARG_L(self):
+            return self.getToken(RAParser.ARG_L, 0)
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
+
+        def ARG_R(self):
+            return self.getToken(RAParser.ARG_R, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitJoinExpr" ):
+                return visitor.visitJoinExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SelectExprContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SELECT(self):
+            return self.getToken(RAParser.SELECT, 0)
+        def ARG_L(self):
+            return self.getToken(RAParser.ARG_L, 0)
+        def valExpr(self):
+            return self.getTypedRuleContext(RAParser.ValExprContext,0)
+
+        def ARG_R(self):
+            return self.getToken(RAParser.ARG_R, 0)
+        def relExpr(self):
+            return self.getTypedRuleContext(RAParser.RelExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSelectExpr" ):
+                return visitor.visitSelectExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
     class RelExprParenthesizedContext(RelExprContext):
@@ -948,150 +1085,6 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ProjectExprContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def PROJECT(self):
-            return self.getToken(RAParser.PROJECT, 0)
-        def ARG_L(self):
-            return self.getToken(RAParser.ARG_L, 0)
-        def listOfValExprs(self):
-            return self.getTypedRuleContext(RAParser.ListOfValExprsContext,0)
-
-        def ARG_R(self):
-            return self.getToken(RAParser.ARG_R, 0)
-        def relExpr(self):
-            return self.getTypedRuleContext(RAParser.RelExprContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProjectExpr" ):
-                return visitor.visitProjectExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RelRefContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ID(self):
-            return self.getToken(RAParser.ID, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRelRef" ):
-                return visitor.visitRelRef(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class SelectExprContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SELECT(self):
-            return self.getToken(RAParser.SELECT, 0)
-        def ARG_L(self):
-            return self.getToken(RAParser.ARG_L, 0)
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-        def ARG_R(self):
-            return self.getToken(RAParser.ARG_R, 0)
-        def relExpr(self):
-            return self.getTypedRuleContext(RAParser.RelExprContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSelectExpr" ):
-                return visitor.visitSelectExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class IntersectExprContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def relExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.RelExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.RelExprContext,i)
-
-        def INTERSECT(self):
-            return self.getToken(RAParser.INTERSECT, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIntersectExpr" ):
-                return visitor.visitIntersectExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class DiffExprContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def relExpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(RAParser.RelExprContext)
-            else:
-                return self.getTypedRuleContext(RAParser.RelExprContext,i)
-
-        def DIFF(self):
-            return self.getToken(RAParser.DIFF, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDiffExpr" ):
-                return visitor.visitDiffExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RenameExprContext(RelExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def RENAME(self):
-            return self.getToken(RAParser.RENAME, 0)
-        def ARG_L(self):
-            return self.getToken(RAParser.ARG_L, 0)
-        def ARG_R(self):
-            return self.getToken(RAParser.ARG_R, 0)
-        def relExpr(self):
-            return self.getTypedRuleContext(RAParser.RelExprContext,0)
-
-        def listOfIDs(self):
-            return self.getTypedRuleContext(RAParser.ListOfIDsContext,0)
-
-        def ID(self):
-            return self.getToken(RAParser.ID, 0)
-        def COLON(self):
-            return self.getToken(RAParser.COLON, 0)
-        def STAR(self):
-            return self.getToken(RAParser.STAR, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRenameExpr" ):
-                return visitor.visitRenameExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class AggrExprContext(RelExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
@@ -1123,7 +1116,33 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class JoinExprContext(RelExprContext):
+    class ProjectExprContext(RelExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PROJECT(self):
+            return self.getToken(RAParser.PROJECT, 0)
+        def ARG_L(self):
+            return self.getToken(RAParser.ARG_L, 0)
+        def listOfValExprs(self):
+            return self.getTypedRuleContext(RAParser.ListOfValExprsContext,0)
+
+        def ARG_R(self):
+            return self.getToken(RAParser.ARG_R, 0)
+        def relExpr(self):
+            return self.getTypedRuleContext(RAParser.RelExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProjectExpr" ):
+                return visitor.visitProjectExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class DiffExprContext(RelExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.RelExprContext
             super().__init__(parser)
@@ -1135,19 +1154,12 @@ class RAParser ( Parser ):
             else:
                 return self.getTypedRuleContext(RAParser.RelExprContext,i)
 
-        def JOIN(self):
-            return self.getToken(RAParser.JOIN, 0)
-        def ARG_L(self):
-            return self.getToken(RAParser.ARG_L, 0)
-        def valExpr(self):
-            return self.getTypedRuleContext(RAParser.ValExprContext,0)
-
-        def ARG_R(self):
-            return self.getToken(RAParser.ARG_R, 0)
+        def DIFF(self):
+            return self.getToken(RAParser.DIFF, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitJoinExpr" ):
-                return visitor.visitJoinExpr(self)
+            if hasattr( visitor, "visitDiffExpr" ):
+                return visitor.visitDiffExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1410,7 +1422,9 @@ class RAParser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class DefinitionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1458,7 +1472,9 @@ class RAParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class CommandContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1474,18 +1490,18 @@ class RAParser ( Parser ):
 
 
 
-    class QuitCommandContext(CommandContext):
+    class ListCommandContext(CommandContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def QUIT(self):
-            return self.getToken(RAParser.QUIT, 0)
+        def LIST(self):
+            return self.getToken(RAParser.LIST, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitQuitCommand" ):
-                return visitor.visitQuitCommand(self)
+            if hasattr( visitor, "visitListCommand" ):
+                return visitor.visitListCommand(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1512,20 +1528,52 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SqlexecCommandContext(CommandContext):
+    class QuitCommandContext(CommandContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def SQLEXEC(self):
-            return self.getToken(RAParser.SQLEXEC, 0)
-        def SQLEXEC_TEXT(self):
-            return self.getToken(RAParser.SQLEXEC_TEXT, 0)
+        def QUIT(self):
+            return self.getToken(RAParser.QUIT, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSqlexecCommand" ):
-                return visitor.visitSqlexecCommand(self)
+            if hasattr( visitor, "visitQuitCommand" ):
+                return visitor.visitQuitCommand(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SourceCommandContext(CommandContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SOURCE(self):
+            return self.getToken(RAParser.SOURCE, 0)
+        def STRING(self):
+            return self.getToken(RAParser.STRING, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSourceCommand" ):
+                return visitor.visitSourceCommand(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class HelpCommandContext(CommandContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def HELP(self):
+            return self.getToken(RAParser.HELP, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitHelpCommand" ):
+                return visitor.visitHelpCommand(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1554,52 +1602,20 @@ class RAParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class HelpCommandContext(CommandContext):
+    class SqlexecCommandContext(CommandContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def HELP(self):
-            return self.getToken(RAParser.HELP, 0)
+        def SQLEXEC(self):
+            return self.getToken(RAParser.SQLEXEC, 0)
+        def SQLEXEC_TEXT(self):
+            return self.getToken(RAParser.SQLEXEC_TEXT, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHelpCommand" ):
-                return visitor.visitHelpCommand(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class SourceCommandContext(CommandContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SOURCE(self):
-            return self.getToken(RAParser.SOURCE, 0)
-        def STRING(self):
-            return self.getToken(RAParser.STRING, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSourceCommand" ):
-                return visitor.visitSourceCommand(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ListCommandContext(CommandContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a RAParser.CommandContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def LIST(self):
-            return self.getToken(RAParser.LIST, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitListCommand" ):
-                return visitor.visitListCommand(self)
+            if hasattr( visitor, "visitSqlexecCommand" ):
+                return visitor.visitSqlexecCommand(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1716,7 +1732,9 @@ class RAParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class StatementContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1784,7 +1802,9 @@ class RAParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ProgramContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
