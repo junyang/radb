@@ -510,7 +510,7 @@ class Join(RelExpr):
                     self.pairs.append((i0, i1))
             if len(self.pairs) == 0:
                 logger.warning('{}: no attributes with matching names found;'
-                               ' natural join degnerates into cross product'.format(self))
+                               ' natural join degenerates into cross product'.format(self))
             for i0, i1 in self.pairs:
                 if any((j0, j1) for j0, j1 in self.pairs if j0 != i0 and j1 == i1):
                     raise self.validationError('ambiguity in natural join: {} from the right input'
