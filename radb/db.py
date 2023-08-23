@@ -29,7 +29,7 @@ class DB:
     def __init__(self, configured, prefix='db.'):
         props = { key[len(prefix):] : configured[key]\
                   for key in configured if key.startswith(prefix) }
-        self.engine = create_engine(engine.url.URL(**props))
+        self.engine = create_engine(engine.url.URL.create(**props))
         self.inspector = inspect(self.engine)
         self.conn = self.engine.connect()
 

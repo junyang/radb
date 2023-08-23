@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from setuptools import setup, find_packages
 from codecs import open
 import os
@@ -36,7 +35,7 @@ setup(
     ],
 
     packages=find_packages(),
-    install_requires=['sqlalchemy==1.4.46', 'antlr4-python3-runtime==4.9.3'],
+    install_requires=['SQLAlchemy>=2.0', 'antlr4-python3-runtime>=4.12'],
     python_requires='>=3.5',
     include_package_data=True,
     entry_points={

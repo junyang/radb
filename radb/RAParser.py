@@ -1,4 +1,4 @@
-# Generated from RAParser.g4 by ANTLR 4.9.2
+# Generated from RAParser.g4 by ANTLR 4.13.0
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -8,92 +8,79 @@ if sys.version_info[1] > 5:
 else:
 	from typing.io import TextIO
 
-
 def serializedATN():
-    with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\66")
-        buf.write("\u00c2\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
-        buf.write("\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
-        buf.write("\2\5\2\35\n\2\3\2\3\2\3\2\5\2\"\n\2\3\2\3\2\3\2\5\2\'")
-        buf.write("\n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
-        buf.write("\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2")
-        buf.write("B\n\2\f\2\16\2E\13\2\3\3\3\3\3\3\5\3J\n\3\3\4\3\4\3\4")
-        buf.write("\5\4O\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5")
-        buf.write("\3\5\5\5]\n\5\3\5\5\5`\n\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5")
-        buf.write("\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5u")
-        buf.write("\n\5\3\5\3\5\3\5\5\5z\n\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5")
-        buf.write("\u0082\n\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5")
-        buf.write("\3\5\3\5\7\5\u0091\n\5\f\5\16\5\u0094\13\5\3\6\3\6\3\6")
-        buf.write("\3\6\3\7\3\7\3\7\5\7\u009d\n\7\3\7\3\7\5\7\u00a1\n\7\3")
-        buf.write("\7\3\7\5\7\u00a5\n\7\3\7\3\7\5\7\u00a9\n\7\3\7\3\7\3\7")
-        buf.write("\3\7\3\7\3\7\5\7\u00b1\n\7\3\b\3\b\3\b\5\b\u00b6\n\b\3")
-        buf.write("\b\3\b\3\t\7\t\u00bb\n\t\f\t\16\t\u00be\13\t\3\t\3\t\3")
-        buf.write("\t\2\4\2\b\n\2\4\6\b\n\f\16\20\2\6\3\2\36\37\3\2 !\3\2")
-        buf.write(").\4\2\22\22\36\36\2\u00e6\2&\3\2\2\2\4F\3\2\2\2\6K\3")
-        buf.write("\2\2\2\by\3\2\2\2\n\u0095\3\2\2\2\f\u00b0\3\2\2\2\16\u00b5")
-        buf.write("\3\2\2\2\20\u00bc\3\2\2\2\22\23\b\2\1\2\23\'\7\20\2\2")
-        buf.write("\24\'\7\21\2\2\25\26\7#\2\2\26\27\5\2\2\2\27\30\7$\2\2")
-        buf.write("\30\'\3\2\2\2\31\32\7\22\2\2\32\34\7#\2\2\33\35\5\4\3")
-        buf.write("\2\34\33\3\2\2\2\34\35\3\2\2\2\35\36\3\2\2\2\36\'\7$\2")
-        buf.write("\2\37 \7\22\2\2 \"\7\34\2\2!\37\3\2\2\2!\"\3\2\2\2\"#")
-        buf.write("\3\2\2\2#\'\7\22\2\2$%\7\17\2\2%\'\5\2\2\5&\22\3\2\2\2")
-        buf.write("&\24\3\2\2\2&\25\3\2\2\2&\31\3\2\2\2&!\3\2\2\2&$\3\2\2")
-        buf.write("\2\'C\3\2\2\2()\f\f\2\2)*\t\2\2\2*B\5\2\2\r+,\f\13\2\2")
-        buf.write(",-\t\3\2\2-B\5\2\2\f./\f\n\2\2/\60\7\"\2\2\60B\5\2\2\13")
-        buf.write("\61\62\f\t\2\2\62\63\t\4\2\2\63B\5\2\2\n\64\65\f\b\2\2")
-        buf.write("\65\66\7\f\2\2\66B\5\2\2\t\678\f\4\2\289\7\r\2\29B\5\2")
-        buf.write("\2\5:;\f\3\2\2;<\7\16\2\2<B\5\2\2\4=>\f\7\2\2>B\7\b\2")
-        buf.write("\2?@\f\6\2\2@B\7\t\2\2A(\3\2\2\2A+\3\2\2\2A.\3\2\2\2A")
-        buf.write("\61\3\2\2\2A\64\3\2\2\2A\67\3\2\2\2A:\3\2\2\2A=\3\2\2")
-        buf.write("\2A?\3\2\2\2BE\3\2\2\2CA\3\2\2\2CD\3\2\2\2D\3\3\2\2\2")
-        buf.write("EC\3\2\2\2FI\5\2\2\2GH\7\35\2\2HJ\5\4\3\2IG\3\2\2\2IJ")
-        buf.write("\3\2\2\2J\5\3\2\2\2KN\7\22\2\2LM\7\35\2\2MO\5\6\4\2NL")
-        buf.write("\3\2\2\2NO\3\2\2\2O\7\3\2\2\2PQ\b\5\1\2QR\7#\2\2RS\5\b")
-        buf.write("\5\2ST\7$\2\2Tz\3\2\2\2Uz\7\22\2\2VW\7\23\2\2W_\7%\2\2")
-        buf.write("XY\7\22\2\2Y\\\7(\2\2Z]\7\36\2\2[]\5\6\4\2\\Z\3\2\2\2")
-        buf.write("\\[\3\2\2\2]`\3\2\2\2^`\5\6\4\2_X\3\2\2\2_^\3\2\2\2`a")
-        buf.write("\3\2\2\2ab\7&\2\2bz\5\b\5\13cd\7\24\2\2de\7%\2\2ef\5\4")
-        buf.write("\3\2fg\7&\2\2gh\5\b\5\nhz\3\2\2\2ij\7\25\2\2jk\7%\2\2")
-        buf.write("kl\5\2\2\2lm\7&\2\2mn\5\b\5\tnz\3\2\2\2op\7\33\2\2pq\7")
-        buf.write("%\2\2qt\5\4\3\2rs\7(\2\2su\5\4\3\2tr\3\2\2\2tu\3\2\2\2")
-        buf.write("uv\3\2\2\2vw\7&\2\2wx\5\b\5\3xz\3\2\2\2yP\3\2\2\2yU\3")
-        buf.write("\2\2\2yV\3\2\2\2yc\3\2\2\2yi\3\2\2\2yo\3\2\2\2z\u0092")
-        buf.write("\3\2\2\2{|\f\b\2\2|\u0081\7\26\2\2}~\7%\2\2~\177\5\2\2")
-        buf.write("\2\177\u0080\7&\2\2\u0080\u0082\3\2\2\2\u0081}\3\2\2\2")
-        buf.write("\u0081\u0082\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0091\5")
-        buf.write("\b\5\t\u0084\u0085\f\7\2\2\u0085\u0086\7\27\2\2\u0086")
-        buf.write("\u0091\5\b\5\b\u0087\u0088\f\6\2\2\u0088\u0089\7\30\2")
-        buf.write("\2\u0089\u0091\5\b\5\7\u008a\u008b\f\5\2\2\u008b\u008c")
-        buf.write("\7\31\2\2\u008c\u0091\5\b\5\6\u008d\u008e\f\4\2\2\u008e")
-        buf.write("\u008f\7\32\2\2\u008f\u0091\5\b\5\5\u0090{\3\2\2\2\u0090")
-        buf.write("\u0084\3\2\2\2\u0090\u0087\3\2\2\2\u0090\u008a\3\2\2\2")
-        buf.write("\u0090\u008d\3\2\2\2\u0091\u0094\3\2\2\2\u0092\u0090\3")
-        buf.write("\2\2\2\u0092\u0093\3\2\2\2\u0093\t\3\2\2\2\u0094\u0092")
-        buf.write("\3\2\2\2\u0095\u0096\7\22\2\2\u0096\u0097\7\'\2\2\u0097")
-        buf.write("\u0098\5\b\5\2\u0098\13\3\2\2\2\u0099\u00b1\7/\2\2\u009a")
-        buf.write("\u00a0\7\60\2\2\u009b\u009d\7\7\2\2\u009c\u009b\3\2\2")
-        buf.write("\2\u009c\u009d\3\2\2\2\u009d\u009e\3\2\2\2\u009e\u00a1")
-        buf.write("\7\22\2\2\u009f\u00a1\7\36\2\2\u00a0\u009c\3\2\2\2\u00a0")
-        buf.write("\u009f\3\2\2\2\u00a1\u00b1\3\2\2\2\u00a2\u00a4\7\61\2")
-        buf.write("\2\u00a3\u00a5\7\7\2\2\u00a4\u00a3\3\2\2\2\u00a4\u00a5")
-        buf.write("\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\u00a8\t\5\2\2\u00a7")
-        buf.write("\u00a9\7\20\2\2\u00a8\u00a7\3\2\2\2\u00a8\u00a9\3\2\2")
-        buf.write("\2\u00a9\u00b1\3\2\2\2\u00aa\u00ab\7\62\2\2\u00ab\u00b1")
-        buf.write("\7\20\2\2\u00ac\u00b1\7\63\2\2\u00ad\u00b1\7\64\2\2\u00ae")
-        buf.write("\u00af\7\65\2\2\u00af\u00b1\7\66\2\2\u00b0\u0099\3\2\2")
-        buf.write("\2\u00b0\u009a\3\2\2\2\u00b0\u00a2\3\2\2\2\u00b0\u00aa")
-        buf.write("\3\2\2\2\u00b0\u00ac\3\2\2\2\u00b0\u00ad\3\2\2\2\u00b0")
-        buf.write("\u00ae\3\2\2\2\u00b1\r\3\2\2\2\u00b2\u00b6\5\b\5\2\u00b3")
-        buf.write("\u00b6\5\n\6\2\u00b4\u00b6\5\f\7\2\u00b5\u00b2\3\2\2\2")
-        buf.write("\u00b5\u00b3\3\2\2\2\u00b5\u00b4\3\2\2\2\u00b6\u00b7\3")
-        buf.write("\2\2\2\u00b7\u00b8\7\6\2\2\u00b8\17\3\2\2\2\u00b9\u00bb")
-        buf.write("\5\16\b\2\u00ba\u00b9\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc")
-        buf.write("\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\u00bf\3\2\2\2")
-        buf.write("\u00be\u00bc\3\2\2\2\u00bf\u00c0\7\2\2\3\u00c0\21\3\2")
-        buf.write("\2\2\27\34!&ACIN\\_ty\u0081\u0090\u0092\u009c\u00a0\u00a4")
-        buf.write("\u00a8\u00b0\u00b5\u00bc")
-        return buf.getvalue()
-
+    return [
+        4,1,52,192,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,3,0,27,8,0,1,0,
+        1,0,1,0,3,0,32,8,0,1,0,1,0,1,0,3,0,37,8,0,1,0,1,0,1,0,1,0,1,0,1,
+        0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
+        0,1,0,1,0,1,0,5,0,64,8,0,10,0,12,0,67,9,0,1,1,1,1,1,1,3,1,72,8,1,
+        1,2,1,2,1,2,3,2,77,8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,
+        3,1,3,3,3,91,8,3,1,3,3,3,94,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
+        1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,115,8,3,1,3,1,3,
+        1,3,3,3,120,8,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,128,8,3,1,3,1,3,1,3,
+        1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,5,3,143,8,3,10,3,12,3,146,
+        9,3,1,4,1,4,1,4,1,4,1,5,1,5,1,5,3,5,155,8,5,1,5,1,5,3,5,159,8,5,
+        1,5,1,5,3,5,163,8,5,1,5,1,5,3,5,167,8,5,1,5,1,5,1,5,1,5,1,5,1,5,
+        3,5,175,8,5,1,6,1,6,1,6,3,6,180,8,6,1,6,1,6,1,7,5,7,185,8,7,10,7,
+        12,7,188,9,7,1,7,1,7,1,7,0,2,0,6,8,0,2,4,6,8,10,12,14,0,4,1,0,28,
+        29,1,0,30,31,1,0,39,44,2,0,16,16,28,28,228,0,36,1,0,0,0,2,68,1,0,
+        0,0,4,73,1,0,0,0,6,119,1,0,0,0,8,147,1,0,0,0,10,174,1,0,0,0,12,179,
+        1,0,0,0,14,186,1,0,0,0,16,17,6,0,-1,0,17,37,5,14,0,0,18,37,5,15,
+        0,0,19,20,5,33,0,0,20,21,3,0,0,0,21,22,5,34,0,0,22,37,1,0,0,0,23,
+        24,5,16,0,0,24,26,5,33,0,0,25,27,3,2,1,0,26,25,1,0,0,0,26,27,1,0,
+        0,0,27,28,1,0,0,0,28,37,5,34,0,0,29,30,5,16,0,0,30,32,5,26,0,0,31,
+        29,1,0,0,0,31,32,1,0,0,0,32,33,1,0,0,0,33,37,5,16,0,0,34,35,5,13,
+        0,0,35,37,3,0,0,3,36,16,1,0,0,0,36,18,1,0,0,0,36,19,1,0,0,0,36,23,
+        1,0,0,0,36,31,1,0,0,0,36,34,1,0,0,0,37,65,1,0,0,0,38,39,10,10,0,
+        0,39,40,7,0,0,0,40,64,3,0,0,11,41,42,10,9,0,0,42,43,7,1,0,0,43,64,
+        3,0,0,10,44,45,10,8,0,0,45,46,5,32,0,0,46,64,3,0,0,9,47,48,10,7,
+        0,0,48,49,7,2,0,0,49,64,3,0,0,8,50,51,10,6,0,0,51,52,5,10,0,0,52,
+        64,3,0,0,7,53,54,10,2,0,0,54,55,5,11,0,0,55,64,3,0,0,3,56,57,10,
+        1,0,0,57,58,5,12,0,0,58,64,3,0,0,2,59,60,10,5,0,0,60,64,5,6,0,0,
+        61,62,10,4,0,0,62,64,5,7,0,0,63,38,1,0,0,0,63,41,1,0,0,0,63,44,1,
+        0,0,0,63,47,1,0,0,0,63,50,1,0,0,0,63,53,1,0,0,0,63,56,1,0,0,0,63,
+        59,1,0,0,0,63,61,1,0,0,0,64,67,1,0,0,0,65,63,1,0,0,0,65,66,1,0,0,
+        0,66,1,1,0,0,0,67,65,1,0,0,0,68,71,3,0,0,0,69,70,5,27,0,0,70,72,
+        3,2,1,0,71,69,1,0,0,0,71,72,1,0,0,0,72,3,1,0,0,0,73,76,5,16,0,0,
+        74,75,5,27,0,0,75,77,3,4,2,0,76,74,1,0,0,0,76,77,1,0,0,0,77,5,1,
+        0,0,0,78,79,6,3,-1,0,79,80,5,33,0,0,80,81,3,6,3,0,81,82,5,34,0,0,
+        82,120,1,0,0,0,83,120,5,16,0,0,84,85,5,17,0,0,85,93,5,35,0,0,86,
+        87,5,16,0,0,87,90,5,38,0,0,88,91,5,28,0,0,89,91,3,4,2,0,90,88,1,
+        0,0,0,90,89,1,0,0,0,91,94,1,0,0,0,92,94,3,4,2,0,93,86,1,0,0,0,93,
+        92,1,0,0,0,94,95,1,0,0,0,95,96,5,36,0,0,96,120,3,6,3,9,97,98,5,18,
+        0,0,98,99,5,35,0,0,99,100,3,2,1,0,100,101,5,36,0,0,101,102,3,6,3,
+        8,102,120,1,0,0,0,103,104,5,19,0,0,104,105,5,35,0,0,105,106,3,0,
+        0,0,106,107,5,36,0,0,107,108,3,6,3,7,108,120,1,0,0,0,109,110,5,25,
+        0,0,110,111,5,35,0,0,111,114,3,2,1,0,112,113,5,38,0,0,113,115,3,
+        2,1,0,114,112,1,0,0,0,114,115,1,0,0,0,115,116,1,0,0,0,116,117,5,
+        36,0,0,117,118,3,6,3,1,118,120,1,0,0,0,119,78,1,0,0,0,119,83,1,0,
+        0,0,119,84,1,0,0,0,119,97,1,0,0,0,119,103,1,0,0,0,119,109,1,0,0,
+        0,120,144,1,0,0,0,121,122,10,6,0,0,122,127,5,20,0,0,123,124,5,35,
+        0,0,124,125,3,0,0,0,125,126,5,36,0,0,126,128,1,0,0,0,127,123,1,0,
+        0,0,127,128,1,0,0,0,128,129,1,0,0,0,129,143,3,6,3,7,130,131,10,5,
+        0,0,131,132,5,21,0,0,132,143,3,6,3,6,133,134,10,4,0,0,134,135,5,
+        22,0,0,135,143,3,6,3,5,136,137,10,3,0,0,137,138,5,23,0,0,138,143,
+        3,6,3,4,139,140,10,2,0,0,140,141,5,24,0,0,141,143,3,6,3,3,142,121,
+        1,0,0,0,142,130,1,0,0,0,142,133,1,0,0,0,142,136,1,0,0,0,142,139,
+        1,0,0,0,143,146,1,0,0,0,144,142,1,0,0,0,144,145,1,0,0,0,145,7,1,
+        0,0,0,146,144,1,0,0,0,147,148,5,16,0,0,148,149,5,37,0,0,149,150,
+        3,6,3,0,150,9,1,0,0,0,151,175,5,45,0,0,152,158,5,46,0,0,153,155,
+        5,5,0,0,154,153,1,0,0,0,154,155,1,0,0,0,155,156,1,0,0,0,156,159,
+        5,16,0,0,157,159,5,28,0,0,158,154,1,0,0,0,158,157,1,0,0,0,159,175,
+        1,0,0,0,160,162,5,47,0,0,161,163,5,5,0,0,162,161,1,0,0,0,162,163,
+        1,0,0,0,163,164,1,0,0,0,164,166,7,3,0,0,165,167,5,14,0,0,166,165,
+        1,0,0,0,166,167,1,0,0,0,167,175,1,0,0,0,168,169,5,48,0,0,169,175,
+        5,14,0,0,170,175,5,49,0,0,171,175,5,50,0,0,172,173,5,51,0,0,173,
+        175,5,52,0,0,174,151,1,0,0,0,174,152,1,0,0,0,174,160,1,0,0,0,174,
+        168,1,0,0,0,174,170,1,0,0,0,174,171,1,0,0,0,174,172,1,0,0,0,175,
+        11,1,0,0,0,176,180,3,6,3,0,177,180,3,8,4,0,178,180,3,10,5,0,179,
+        176,1,0,0,0,179,177,1,0,0,0,179,178,1,0,0,0,180,181,1,0,0,0,181,
+        182,5,4,0,0,182,13,1,0,0,0,183,185,3,12,6,0,184,183,1,0,0,0,185,
+        188,1,0,0,0,186,184,1,0,0,0,186,187,1,0,0,0,187,189,1,0,0,0,188,
+        186,1,0,0,0,189,190,5,0,0,1,190,15,1,0,0,0,21,26,31,36,63,65,71,
+        76,90,93,114,119,127,142,144,154,158,162,166,174,179,186
+    ]
 
 class RAParser ( Parser ):
 
@@ -195,7 +182,7 @@ class RAParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.9.2")
+        self.checkVersion("4.13.0")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -594,7 +581,7 @@ class RAParser ( Parser ):
                 self.state = 26
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << RAParser.NOT) | (1 << RAParser.STRING) | (1 << RAParser.NUMBER) | (1 << RAParser.ID) | (1 << RAParser.PAREN_L))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 8590057472) != 0):
                     self.state = 25
                     self.listOfValExprs()
 
@@ -653,7 +640,7 @@ class RAParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
                         self.state = 39
                         _la = self._input.LA(1)
-                        if not(_la==RAParser.STAR or _la==RAParser.SLASH):
+                        if not(_la==28 or _la==29):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -671,7 +658,7 @@ class RAParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
                         self.state = 42
                         _la = self._input.LA(1)
-                        if not(_la==RAParser.PLUS or _la==RAParser.MINUS):
+                        if not(_la==30 or _la==31):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -702,7 +689,7 @@ class RAParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
                         self.state = 48
                         _la = self._input.LA(1)
-                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << RAParser.LE) | (1 << RAParser.NE) | (1 << RAParser.GE) | (1 << RAParser.LT) | (1 << RAParser.EQ) | (1 << RAParser.GT))) != 0)):
+                        if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 34634616274944) != 0)):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -828,7 +815,7 @@ class RAParser ( Parser ):
             self.state = 71
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==RAParser.COMMA:
+            if _la==27:
                 self.state = 69
                 self.match(RAParser.COMMA)
                 self.state = 70
@@ -885,7 +872,7 @@ class RAParser ( Parser ):
             self.state = 76
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==RAParser.COMMA:
+            if _la==27:
                 self.state = 74
                 self.match(RAParser.COMMA)
                 self.state = 75
@@ -1200,7 +1187,7 @@ class RAParser ( Parser ):
             self.state = 119
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [RAParser.PAREN_L]:
+            if token in [33]:
                 localctx = RAParser.RelExprParenthesizedContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
@@ -1212,14 +1199,14 @@ class RAParser ( Parser ):
                 self.state = 81
                 self.match(RAParser.PAREN_R)
                 pass
-            elif token in [RAParser.ID]:
+            elif token in [16]:
                 localctx = RAParser.RelRefContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 83
                 self.match(RAParser.ID)
                 pass
-            elif token in [RAParser.RENAME]:
+            elif token in [17]:
                 localctx = RAParser.RenameExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
@@ -1238,11 +1225,11 @@ class RAParser ( Parser ):
                     self.state = 90
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [RAParser.STAR]:
+                    if token in [28]:
                         self.state = 88
                         self.match(RAParser.STAR)
                         pass
-                    elif token in [RAParser.ID]:
+                    elif token in [16]:
                         self.state = 89
                         self.listOfIDs()
                         pass
@@ -1262,7 +1249,7 @@ class RAParser ( Parser ):
                 self.state = 96
                 self.relExpr(9)
                 pass
-            elif token in [RAParser.PROJECT]:
+            elif token in [18]:
                 localctx = RAParser.ProjectExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
@@ -1277,7 +1264,7 @@ class RAParser ( Parser ):
                 self.state = 101
                 self.relExpr(8)
                 pass
-            elif token in [RAParser.SELECT]:
+            elif token in [19]:
                 localctx = RAParser.SelectExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
@@ -1292,7 +1279,7 @@ class RAParser ( Parser ):
                 self.state = 107
                 self.relExpr(7)
                 pass
-            elif token in [RAParser.AGGR]:
+            elif token in [25]:
                 localctx = RAParser.AggrExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
@@ -1305,7 +1292,7 @@ class RAParser ( Parser ):
                 self.state = 114
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==RAParser.COLON:
+                if _la==38:
                     self.state = 112
                     self.match(RAParser.COLON)
                     self.state = 113
@@ -1344,7 +1331,7 @@ class RAParser ( Parser ):
                         self.state = 127
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
-                        if _la==RAParser.ARG_L:
+                        if _la==35:
                             self.state = 123
                             self.match(RAParser.ARG_L)
                             self.state = 124
@@ -1630,13 +1617,13 @@ class RAParser ( Parser ):
             self.state = 174
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [RAParser.LIST]:
+            if token in [45]:
                 localctx = RAParser.ListCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 151
                 self.match(RAParser.LIST)
                 pass
-            elif token in [RAParser.CLEAR]:
+            elif token in [46]:
                 localctx = RAParser.ClearCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 152
@@ -1644,11 +1631,11 @@ class RAParser ( Parser ):
                 self.state = 158
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [RAParser.FORCE, RAParser.ID]:
+                if token in [5, 16]:
                     self.state = 154
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==RAParser.FORCE:
+                    if _la==5:
                         self.state = 153
                         self.match(RAParser.FORCE)
 
@@ -1656,7 +1643,7 @@ class RAParser ( Parser ):
                     self.state = 156
                     self.match(RAParser.ID)
                     pass
-                elif token in [RAParser.STAR]:
+                elif token in [28]:
                     self.state = 157
                     self.match(RAParser.STAR)
                     pass
@@ -1664,7 +1651,7 @@ class RAParser ( Parser ):
                     raise NoViableAltException(self)
 
                 pass
-            elif token in [RAParser.SAVE]:
+            elif token in [47]:
                 localctx = RAParser.SaveCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 160
@@ -1672,14 +1659,14 @@ class RAParser ( Parser ):
                 self.state = 162
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==RAParser.FORCE:
+                if _la==5:
                     self.state = 161
                     self.match(RAParser.FORCE)
 
 
                 self.state = 164
                 _la = self._input.LA(1)
-                if not(_la==RAParser.ID or _la==RAParser.STAR):
+                if not(_la==16 or _la==28):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -1687,13 +1674,13 @@ class RAParser ( Parser ):
                 self.state = 166
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==RAParser.STRING:
+                if _la==14:
                     self.state = 165
                     self.match(RAParser.STRING)
 
 
                 pass
-            elif token in [RAParser.SOURCE]:
+            elif token in [48]:
                 localctx = RAParser.SourceCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 168
@@ -1701,19 +1688,19 @@ class RAParser ( Parser ):
                 self.state = 169
                 self.match(RAParser.STRING)
                 pass
-            elif token in [RAParser.HELP]:
+            elif token in [49]:
                 localctx = RAParser.HelpCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 170
                 self.match(RAParser.HELP)
                 pass
-            elif token in [RAParser.QUIT]:
+            elif token in [50]:
                 localctx = RAParser.QuitCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 171
                 self.match(RAParser.QUIT)
                 pass
-            elif token in [RAParser.SQLEXEC]:
+            elif token in [51]:
                 localctx = RAParser.SqlexecCommandContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
                 self.state = 172
@@ -1842,7 +1829,7 @@ class RAParser ( Parser ):
             self.state = 186
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << RAParser.ID) | (1 << RAParser.RENAME) | (1 << RAParser.PROJECT) | (1 << RAParser.SELECT) | (1 << RAParser.AGGR) | (1 << RAParser.PAREN_L) | (1 << RAParser.LIST) | (1 << RAParser.CLEAR) | (1 << RAParser.SAVE) | (1 << RAParser.SOURCE) | (1 << RAParser.HELP) | (1 << RAParser.QUIT) | (1 << RAParser.SQLEXEC))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 4468423879753728) != 0):
                 self.state = 183
                 self.statement()
                 self.state = 188
